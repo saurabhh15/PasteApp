@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 const Navbar = () => {
   return (
     <nav className="bg-zinc-900 border-b border-zinc-800 font-mono">
-      <div className="max-w-6xl mx-auto px-3 sm:px-6 py-3 sm:py-4">
+      <div className="max-w-4xl mx-auto px-3 sm:px-6 py-3 sm:py-4">
 
         {/* Wrapper */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
