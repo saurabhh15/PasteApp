@@ -33,11 +33,11 @@ const Pastes = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-zinc-950 text-zinc-200 font-mono flex flex-col">
+    <div className="min-h-[calc(100vh-64px)] w-full bg-zinc-950 text-zinc-200 font-mono flex flex-col">
       {/* Page wrapper */}
-      <div className="flex-1 w-full max-w-4xl lg:max-w-6xl xl:max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-10">
+      <div className="flex-1 w-full max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto px-4 lg:px-8 py-4 lg:py-6">
         {/* Search */}
-        <div className="mb-6 sm:mb-8">
+        <div className="mb-6 ">
           <input
             className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 sm:px-4 py-2.5 text-xs sm:text-sm text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-indigo-500 transition-colors"
             type="search"

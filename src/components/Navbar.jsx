@@ -2,12 +2,10 @@ import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <nav className="bg-zinc-900 border-b border-zinc-800 font-mono">
-      <div className="max-w-4xl mx-auto px-3 sm:px-6 py-3 sm:py-4">
-
+    <nav className="sticky top-0 z-50 h-16 bg-zinc-900/90 backdrop-blur-md border-b border-zinc-800 font-mono">
+      <div className="w-full h-full px-4 lg:px-8">
         {/* Wrapper */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-
+        <div className="h-full flex flex-col sm:flex-row sm:items-center sm:justify-between justify-center gap-2">
           {/* Logo */}
           <span className="text-indigo-400 font-bold tracking-widest uppercase text-xs sm:text-sm">
             📋 Pasteboard
@@ -41,7 +39,6 @@ const Navbar = () => {
               Pastes
             </NavLink>
           </div>
-
         </div>
       </div>
     </nav>

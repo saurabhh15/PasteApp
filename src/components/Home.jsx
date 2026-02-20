@@ -57,9 +57,9 @@ const Home = () => {
   }, [pasteId]);
 
   return (
-    <div className="min-h-screen w-full bg-zinc-950 text-zinc-200 font-mono flex flex-col">
+    <div className="min-h-[calc(100vh-64px)] w-full bg-zinc-950 text-zinc-200 font-mono flex flex-col">
       {/* Page wrapper */}
-      <div className="flex-1 w-full max-w-4xl lg:max-w-6xl xl:max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-10">
+      <div className="flex-1 w-full max-w-4xl lg:max-w-6xl xl:max-w-7xl mx-auto px-3 sm:px-6  py-4 lg:py-6">
         {/* Heading */}
         <div className="mb-5 sm:mb-6">
           <h1 className="text-sm sm:text-lg font-bold tracking-widest uppercase text-zinc-300">
