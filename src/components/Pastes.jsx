@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromPastes } from "../redux/pasteSlice";
+import { deletePasteFromCloud } from "../redux/pasteSlice";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
@@ -14,7 +14,7 @@ const Pastes = () => {
   );
 
   function handleDelete(pasteId) {
-    dispatch(removeFromPastes(pasteId));
+    dispatch(deletePasteFromCloud(pasteId));
   }
 
   function handleShare(paste) {

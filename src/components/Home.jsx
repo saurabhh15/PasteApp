@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToPastes, updateToPastes } from "../redux/pasteSlice";
+import { addPasteToCloud, updatePasteInCloud } from "../redux/pasteSlice";
 import { nanoid } from "nanoid";
 
 const Home = () => {
@@ -21,9 +21,9 @@ const Home = () => {
     };
 
     if (pasteId) {
-      dispatch(updateToPastes(paste));
+      dispatch(updatePasteInCloud(paste));
     } else {
-      dispatch(addToPastes(paste));
+      dispatch(addPasteToCloud(paste));
     }
 
     setTitle("");
