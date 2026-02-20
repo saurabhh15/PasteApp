@@ -17,23 +17,55 @@ export const fetchPastes = createAsyncThunk('paste/fetchPastes', async () => {
 });
 
 // Add paste to Firestore
-export const addPasteToCloud = createAsyncThunk('paste/addPasteToCloud', async (paste) => {
-  const docRef = await addDoc(collection(db, 'pastes'), paste);
-  return { ...paste, _id: docRef.id };
-});
+export const addPasteToCloud = createAsyncThunk(
+  'paste/addPasteToCloud',
+  async (paste, { getState, rejectWithValue }) => {
+    const { pastes } = getState().paste;
+
+    // ✅ Empty check
+    if (!paste.title.trim() || !paste.content.trim()) {
+      toast.error("Title and content cannot be empty!");
+      return rejectWithValue("empty fields");
+    }
+
+    // ✅ Duplicate title check
+    const duplicate = pastes.find(
+      (p) => p.title.toLowerCase() === paste.title.toLowerCase()
+    );
+    if (duplicate) {
+      toast.error("A paste with this title already exists!");
+      return rejectWithValue("duplicate title");
+    }
+
+    const docRef = await addDoc(collection(db, 'pastes'), paste);
+    return { ...paste, _id: docRef.id };
+  }
+);
 
 // Update paste in Firestore
-export const updatePasteInCloud = createAsyncThunk('paste/updatePasteInCloud', async (paste) => {
-  const { _id, ...data } = paste;
-  await updateDoc(doc(db, 'pastes', _id), data);
-  return paste;
-});
+export const updatePasteInCloud = createAsyncThunk(
+  'paste/updatePasteInCloud',
+  async (paste, { rejectWithValue }) => {
+    // ✅ Empty check on update too
+    if (!paste.title.trim() || !paste.content.trim()) {
+      toast.error("Title and content cannot be empty!");
+      return rejectWithValue("empty fields");
+    }
+
+    const { _id, ...data } = paste;
+    await updateDoc(doc(db, 'pastes', _id), data);
+    return paste;
+  }
+);
 
 // Delete paste from Firestore
-export const deletePasteFromCloud = createAsyncThunk('paste/deletePasteFromCloud', async (pasteId) => {
-  await deleteDoc(doc(db, 'pastes', pasteId));
-  return pasteId;
-});
+export const deletePasteFromCloud = createAsyncThunk(
+  'paste/deletePasteFromCloud',
+  async (pasteId) => {
+    await deleteDoc(doc(db, 'pastes', pasteId));
+    return pasteId;
+  }
+);
 
 const pasteSlice = createSlice({
   name: 'paste',
@@ -50,7 +82,10 @@ const pasteSlice = createSlice({
         state.loading = false;
         state.pastes = action.payload;
       })
-      .addCase(fetchPastes.rejected, (state) => { state.loading = false; })
+      .addCase(fetchPastes.rejected, (state) => {
+        state.loading = false;
+        toast.error("Failed to fetch pastes!");
+      })
 
       // Add
       .addCase(addPasteToCloud.fulfilled, (state, action) => {
@@ -70,11 +105,25 @@ const pasteSlice = createSlice({
         state.pastes = state.pastes.filter((p) => p._id !== action.payload);
         toast.success("Paste deleted!");
       })
+
+      // ✅ Error handling for add/update/delete failures
+      .addCase(addPasteToCloud.rejected, (state, action) => {
+        if (action.payload !== "empty fields" && action.payload !== "duplicate title") {
+          toast.error("Failed to create paste!");
+        }
+      })
+      .addCase(updatePasteInCloud.rejected, (state, action) => {
+        if (action.payload !== "empty fields") {
+          toast.error("Failed to update paste!");
+        }
+      })
+      .addCase(deletePasteFromCloud.rejected, () => {
+        toast.error("Failed to delete paste!");
+      })
   }
 });
 
 export default pasteSlice.reducer;
-
 
 
 

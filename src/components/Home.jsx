@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addPasteToCloud, updatePasteInCloud } from "../redux/pasteSlice";
-import { nanoid } from "nanoid";
 
 const Home = () => {
   const [title, setTitle] = useState("");
@@ -13,17 +12,30 @@ const Home = () => {
   const pastes = useSelector((state) => state.paste.pastes);
 
   function createPaste() {
-    const paste = {
-      _id: pasteId || nanoid(), // ✅ fixed: removed duplicate _id
-      title: title,
-      content: value,
-      createdAt: new Date().toISOString(),
-    };
+    if (!title.trim() || !value.trim()) {
+      toast.error("Title and content cannot be empty!");
+      return;
+    }
 
     if (pasteId) {
-      dispatch(updatePasteInCloud(paste));
+      // update — needs _id to find the doc
+      dispatch(
+        updatePasteInCloud({
+          _id: pasteId,
+          title,
+          content: value,
+          createdAt: new Date().toISOString(),
+        }),
+      );
     } else {
-      dispatch(addPasteToCloud(paste));
+      // create — NO _id, Firestore will generate it
+      dispatch(
+        addPasteToCloud({
+          title,
+          content: value,
+          createdAt: new Date().toISOString(),
+        }),
+      );
     }
 
     setTitle("");
@@ -47,7 +59,6 @@ const Home = () => {
   return (
     <div className=" w-3.5xl bg-zinc-950 text-zinc-200 font-mono px-4 py-10">
       <div className="w-3xl  mx-auto">
-
         {/* Page heading */}
         <div className="mb-6">
           <h1 className="text-lg font-bold tracking-widest uppercase text-zinc-300">
@@ -62,7 +73,6 @@ const Home = () => {
 
         {/* Card */}
         <div className="bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden shadow-xl shadow-black/40">
-
           {/* Title bar */}
           <div className="flex items-center gap-3 px-5 py-3 border-b border-zinc-800 bg-zinc-900/80">
             <div className="flex gap-1.5">
@@ -81,7 +91,6 @@ const Home = () => {
 
           {/* Line numbers + Textarea */}
           <div className="flex min-h-72">
-
             {/* Line numbers */}
             <div className="select-none bg-zinc-900/50 border-r border-zinc-800 px-3 py-4 text-right text-xs text-zinc-600 leading-7 min-w-[44px]">
               {(value || " ").split("\n").map((_, i) => (
