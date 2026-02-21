@@ -13,14 +13,14 @@ const Navbar = () => {
     <>
       <nav className="sticky top-0 z-50 h-16 bg-zinc-900/90 backdrop-blur-md border-b border-zinc-800 font-mono">
         <div className="w-full h-full px-4 lg:px-8">
-          <div className="h-full flex items-center justify-between gap-3">
+          <div className="h-full flex items-center justify-between gap-3 min-w-0">
             {/* Logo */}
             <span className="text-indigo-400 font-bold tracking-widest uppercase text-xs sm:text-sm whitespace-nowrap">
               📋 Pasteboard
             </span>
 
             {/* Nav links */}
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center justify-end gap-2 max-w-full overflow-hidden">
               <NavLink
                 to="/"
                 className={({ isActive }) =>
@@ -66,7 +66,7 @@ const Navbar = () => {
               {/* Auth section */}
               {user ? (
                 /* Logged in — show anonymous avatar + logout */
-                <div className="flex items-center gap-2 ml-1">
+                <div className="flex items-center gap-2 ml-1 shrink-0">
                   {/* Anonymous avatar — shows nothing identifying */}
                   <div
                     title="You're logged in anonymously"

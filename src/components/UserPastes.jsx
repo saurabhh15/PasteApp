@@ -49,7 +49,7 @@ const UserPastes = () => {
   if (!user) return null;
 
   return (
-    <div className="min-h-[calc(100vh-64px)] w-full bg-zinc-950 text-zinc-200 font-mono flex flex-col">
+    <div className="min-h-[calc(100dvh-64px)] w-full bg-zinc-950 text-zinc-200 font-mono flex flex-col">
       <div className="flex-1 w-full max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto px-4 lg:px-8 py-4 lg:py-6">
 
         {/* Header */}

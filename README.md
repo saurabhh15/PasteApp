@@ -1,25 +1,40 @@
-# 📋 Pasteboard — MERN Stack Paste Manager
+# 📋 Pasteboard — Anonymous Paste Manager
 
-A modern **Pastebin-style web app** built with **React, Redux Toolkit, Tailwind CSS, Node.js & Cloud storage**.
-Create, edit, view, share and manage text pastes with a clean editor-style UI.
+A modern **Pastebin-style web app** built with **React, Redux Toolkit, Tailwind CSS & Firebase Cloud**.
+Create, edit, view, and manage pastes with a clean editor-style UI — while keeping user identity **anonymous publicly**.
 
 ---
 
 ## 🚀 Features
 
-✅ Create & update pastes
+✅ Create, update & delete pastes
+✅ Anonymous posting system (owner hidden publicly)
+✅ Email authentication (Login / Signup modal)
+✅ Personal **My Pastes** dashboard
+✅ Owner-only Edit & Delete permissions
 ✅ View paste with line numbers
 ✅ Copy & share paste links
 ✅ Search & filter pastes
-✅ Responsive editor-style design
-✅ Dark theme UI with Tailwind CSS
-✅ Cloud data sync (Redux async actions)
+✅ Responsive editor-style dark UI
+✅ Cloud sync using Redux async thunks + Firestore
+
+---
+
+## 🔐 Anonymous Ownership System
+
+Users must login to manage their content, but:
+
+* 👻 Creator identity is **never shown publicly**
+* 🔒 Only the owner can edit or delete their pastes
+* 📂 Each user has a private **My Pastes** collection
+
+This mimics real anonymous platforms like Pastebin-style apps.
 
 ---
 
 ## 🧱 Tech Stack
 
-**Frontend**
+### **Frontend**
 
 * React
 * React Router
@@ -27,10 +42,10 @@ Create, edit, view, share and manage text pastes with a clean editor-style UI.
 * Tailwind CSS
 * React Hot Toast
 
-**Backend / Cloud**
+### **Cloud / Backend**
 
-* Node.js / Express *(if used)*
-* Firestore / Cloud DB *(based on your setup)*
+* Firebase Authentication
+* Firestore Database
 
 ---
 
@@ -42,11 +57,15 @@ src/
  │    ├── Navbar.jsx
  │    ├── Home.jsx
  │    ├── Pastes.jsx
- │    └── ViewPaste.jsx
+ │    ├── ViewPaste.jsx
+ │    ├── AuthModal.jsx
+ │    └── UserPastes.jsx
  │
  ├── redux/
- │    └── pasteSlice.js
+ │    ├── pasteSlice.js
+ │    └── authSlice.js
  │
+ ├── firebase.js
  ├── App.jsx
  ├── main.jsx
  └── index.css
@@ -77,28 +96,39 @@ http://localhost:5173
 
 ## 📱 Responsive Design
 
-The UI follows a **mobile-first layout**:
+Mobile-first layout:
 
-* Full-width editor experience
-* Sticky navbar
-* Adaptive buttons & typography
-* Optimized for phone, tablet & desktop
+* Sticky responsive navbar
+* Adaptive buttons & layout
+* Editor UI optimized for phones, tablets & desktop
+* Auth modal designed for small screens
 
 ---
 
-## ✨ Future Improvements
+## ✨ Latest Updates
+
+🆕 Firebase Authentication added
+🆕 Login / Signup modal UI
+🆕 Anonymous ownership system
+🆕 My Pastes dashboard
+🆕 Owner-only Edit/Delete controls
+🆕 Improved mobile navbar & layout fixes
+
+---
+
+## 🔮 Future Improvements
 
 * Syntax highlighting
-* User authentication
-* Private / public pastes
 * Markdown preview
-* Code themes
+* Private / expiring pastes
+* Theme switching
+* Paste folders / tags
 
 ---
 
 ## 👨‍💻 Author
 
-Built by **Saurabh** as a MERN full-stack learning project.
+Built by **Saurabh** as a modern React + Cloud learning project.
 
 ---
 
