@@ -11,16 +11,21 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 h-16 bg-zinc-900/90 backdrop-blur-md border-b border-zinc-800 font-mono">
-        <div className="w-full h-full px-4 lg:px-8">
-          <div className="h-full flex items-center justify-between gap-3 min-w-0">
+      {/* ✅ Removed h-16 so mobile height can grow */}
+      <nav className="sticky top-0 z-50 bg-zinc-900/90 backdrop-blur-md border-b border-zinc-800 font-mono">
+        <div className="w-full px-3 sm:px-4 lg:px-8">
+
+          {/* ✅ Mobile = column, Desktop = row */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 py-2">
+
             {/* Logo */}
             <span className="text-indigo-400 font-bold tracking-widest uppercase text-xs sm:text-sm whitespace-nowrap">
               📋 Pasteboard
             </span>
 
-            {/* Nav links */}
-            <div className="flex flex-wrap items-center justify-end gap-2 max-w-full overflow-hidden">
+            {/* ✅ Removed overflow-hidden */}
+            <div className="flex flex-wrap items-center justify-end gap-2 w-full sm:w-auto">
+
               <NavLink
                 to="/"
                 className={({ isActive }) =>
@@ -47,7 +52,6 @@ const Navbar = () => {
                 Pastes
               </NavLink>
 
-              {/* Show "My Pastes" only when logged in */}
               {user && (
                 <NavLink
                   to="/my-pastes"
@@ -63,14 +67,11 @@ const Navbar = () => {
                 </NavLink>
               )}
 
-              {/* Auth section */}
               {user ? (
-                /* Logged in — show anonymous avatar + logout */
-                <div className="flex items-center gap-2 ml-1 shrink-0">
-                  {/* Anonymous avatar — shows nothing identifying */}
+                <div className="flex items-center gap-2 ml-1">
                   <div
                     title="You're logged in anonymously"
-                    className="w-7 h-7 rounded-full bg-indigo-900 border border-indigo-600 flex items-center justify-center text-xs text-indigo-300 cursor-default select-none"
+                    className="w-7 h-7 rounded-full bg-indigo-900 border border-indigo-600 flex items-center justify-center text-xs text-indigo-300 select-none"
                   >
                     👤
                   </div>
@@ -82,7 +83,6 @@ const Navbar = () => {
                   </button>
                 </div>
               ) : (
-                /* Logged out — show Login / Sign Up button */
                 <button
                   onClick={() => setModalOpen(true)}
                   className="ml-1 text-xs tracking-widest uppercase px-3 sm:px-4 py-2 rounded border border-indigo-700 bg-indigo-950 text-indigo-300 hover:bg-indigo-900 hover:text-indigo-200 active:scale-95 transition-all duration-200"
@@ -91,11 +91,11 @@ const Navbar = () => {
                 </button>
               )}
             </div>
+
           </div>
         </div>
       </nav>
 
-      {/* Auth Modal */}
       <AuthModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
     </>
   );

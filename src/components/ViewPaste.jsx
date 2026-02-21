@@ -26,7 +26,7 @@ const ViewPaste = () => {
   const lines = paste.content.split("\n");
 
   return (
-    <div className="min-h-[calc(100dvh-64px)] w-full  bg-zinc-950 text-zinc-200 font-mono flex flex-col">
+    <div className="min-h-screen w-full  bg-zinc-950 text-zinc-200 font-mono flex flex-col">
       {/* Page Wrapper */}
       <div className="flex-1 w-full max-w-5xl lg:max-w-6xl xl:max-w-10xl mx-auto px-4 lg:px-8 py-4 lg:py-6">
         {/* Top breadcrumb */}
