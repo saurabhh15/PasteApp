@@ -1,21 +1,15 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePasteFromCloud } from "../redux/pasteSlice";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 const Pastes = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const pastes = useSelector((state) => state.paste.pastes);
-  const dispatch = useDispatch();
 
   const filteredData = pastes.filter((paste) =>
-    paste.title.toLowerCase().includes(searchTerm.toLowerCase()),
+    paste.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  function handleDelete(pasteId) {
-    dispatch(deletePasteFromCloud(pasteId));
-  }
 
   function handleShare(paste) {
     if (navigator.share) {
@@ -26,7 +20,7 @@ const Pastes = () => {
       });
     } else {
       navigator.clipboard.writeText(
-        `${window.location.origin}/pastes/${paste._id}`,
+        `${window.location.origin}/pastes/${paste._id}`
       );
       toast.success("Link copied to clipboard!");
     }
@@ -34,10 +28,23 @@ const Pastes = () => {
 
   return (
     <div className="min-h-[calc(100vh-64px)] w-full bg-zinc-950 text-zinc-200 font-mono flex flex-col">
-      {/* Page wrapper */}
       <div className="flex-1 w-full max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto px-4 lg:px-8 py-4 lg:py-6">
+
+        {/* Header */}
+        <div className="mb-5">
+          <h1 className="text-sm sm:text-lg font-bold tracking-widest uppercase text-zinc-300">
+            🌐 All Pastes
+          </h1>
+          <p className="text-[10px] sm:text-xs text-zinc-600 mt-1 tracking-wide">
+            Public pastes — all anonymous. To manage your own, go to{" "}
+            <Link to="/my-pastes" className="text-indigo-400 hover:text-indigo-300 underline">
+              My Pastes
+            </Link>.
+          </p>
+        </div>
+
         {/* Search */}
-        <div className="mb-6 ">
+        <div className="mb-6">
           <input
             className="w-full bg-zinc-900 border border-zinc-700 rounded-lg px-3 sm:px-4 py-2.5 text-xs sm:text-sm text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-indigo-500 transition-colors"
             type="search"
@@ -67,12 +74,14 @@ const Pastes = () => {
                       <span className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
                       <span className="w-2.5 h-2.5 rounded-full bg-green-500" />
                     </div>
-
                     <h3 className="text-xs sm:text-sm font-semibold text-zinc-200 tracking-wide truncate">
                       {paste.title}
                     </h3>
+                    {/* Anonymous tag — never shows owner */}
+                    <span className="text-[9px] text-zinc-600 border border-zinc-800 rounded px-1.5 py-0.5 tracking-widest uppercase">
+                      anonymous
+                    </span>
                   </div>
-
                   <span className="text-[10px] sm:text-xs text-zinc-500">
                     {new Date(paste.createdAt).toLocaleDateString("en-US", {
                       year: "numeric",
@@ -91,7 +100,7 @@ const Pastes = () => {
                   </pre>
                 </div>
 
-                {/* Actions */}
+                {/* Actions — NO edit/delete here, public page is read-only */}
                 <div className="px-3 sm:px-5 py-3 border-t border-zinc-800 flex flex-wrap gap-2">
                   <Link
                     to={`/pastes/${paste._id}`}
@@ -99,20 +108,6 @@ const Pastes = () => {
                   >
                     👁 View
                   </Link>
-
-                  <Link
-                    to={`/?pasteId=${paste._id}`}
-                    className="flex-1 sm:flex-none text-center text-xs px-3 py-2 rounded border border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors"
-                  >
-                    ✏️ Edit
-                  </Link>
-
-                  <button
-                    onClick={() => handleDelete(paste._id)}
-                    className="flex-1 sm:flex-none text-xs px-3 py-2 rounded border border-red-900 text-red-400 hover:bg-red-950 hover:text-red-300 transition-colors"
-                  >
-                    🗑 Delete
-                  </button>
 
                   <button
                     onClick={() => handleShare(paste)}
